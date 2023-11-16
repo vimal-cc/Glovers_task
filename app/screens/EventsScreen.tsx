@@ -54,7 +54,7 @@ const eventsData = [
     status: 'COMPLETED',
     time: '9:30 AM',
     team1: {
-      name: 'Milwaukee',
+      name: 'Milwaukee\nBrewers',
       image: require('../assets/images/img.png'),
     },
     team2: {
@@ -69,7 +69,7 @@ const eventsData = [
     status: 'COMPLETED',
     time: '9:41 AM',
     team1: {
-      name: 'Milwaukee',
+      name: 'Milwaukee\nBrewers',
       image: require('../assets/images/img.png'),
     },
     team2: {
@@ -84,7 +84,7 @@ const eventsData = [
     status: 'COMPLETED',
     time: '02:51 AM',
     team1: {
-      name: 'Milwaukee',
+      name: 'Milwaukee\nBrewers',
       image: require('../assets/images/img.png'),
     },
     team2: {
@@ -147,7 +147,7 @@ const EventsScreen = () => {
           <Text style={styles.date}>{item.day}</Text>
           <Text style={styles.day}>{item.date}</Text>
         </View>
-        <View style={{paddingStart: 18, justifyContent: 'space-between'}}>
+        <View style={{paddingStart: 18}}>
           <View style={{flexDirection: 'row'}}>
             <Text style={{color: '#008000', fontWeight: '600'}}>
               {item.status}
@@ -158,13 +158,14 @@ const EventsScreen = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              paddingTop: 15,
             }}>
-            <View style={[styles.natimage]}>
+            <View style={styles.natimage}>
               <Image
                 source={item.team1.image}
                 style={{width: 25, height: 25, borderRadius: 20}}
               />
-              <Text style={[styles.txt]}>{item.team1.name}</Text>
+              <Text style={styles.txt}>{item.team1.name}</Text>
             </View>
             <Text
               style={{
@@ -175,12 +176,12 @@ const EventsScreen = () => {
               }}>
               Vs.
             </Text>
-            <View style={[styles.natimage]}>
+            <View style={styles.natimage}>
               <Image
                 source={item.team2.image}
                 style={{width: 25, height: 25, borderRadius: 20}}
               />
-              <Text style={[styles.txt]}>{item.team2.name}</Text>
+              <Text style={styles.txt}>{item.team2.name}</Text>
             </View>
           </View>
         </View>
@@ -188,7 +189,7 @@ const EventsScreen = () => {
       <View
         style={{
           borderBottomColor: '#d9d9d9',
-          borderBottomWidth:1,
+          borderBottomWidth: 1,
           marginVertical: 15,
           marginStart: 70,
         }}></View>

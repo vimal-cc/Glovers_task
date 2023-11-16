@@ -50,20 +50,15 @@ const ChangePasswordScreen = ({navigation}: any) => {
         backgroundColor="transparent"
         barStyle="dark-content"
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingVertical: 30,
-        }}>
+      <View style={commonStyles.headcontainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             source={require('../assets/images/left_chevron.png')}
             style={{width: 25, height: 28, resizeMode: 'contain'}}></Image>
         </TouchableOpacity>
-        <Text style={styles.changepass}>Change Password</Text>
+        <Text style={commonStyles.textstyle}>Change Password</Text>
       </View>
-      <View style={{marginVertical: 30}}>
+      <View style={{paddingHorizontal:30,marginVertical: 30}}>
         <View style={commonStyles.textinput}>
           <Text style={commonStyles.label}>Old Password</Text>
           <TextInput
@@ -130,7 +125,7 @@ const ChangePasswordScreen = ({navigation}: any) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between',paddingHorizontal:30}}>
         <Text onPress={() => navigation.goBack()} style={styles.text}>
           CANCEL
         </Text>
@@ -147,17 +142,9 @@ const ChangePasswordScreen = ({navigation}: any) => {
 export default ChangePasswordScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 30,
-    backgroundColor: 'white',
-  },
-  changepass: {
-    fontSize: 25,
-    fontWeight: '700',
-    color: 'black',
-    marginStart: 30,
+  container:{
+    flex:1,
+    backgroundColor:'#fff'
   },
   text: {
     backgroundColor: '#cecece',

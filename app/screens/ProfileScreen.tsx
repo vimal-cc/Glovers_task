@@ -57,6 +57,21 @@ const ProfileScreen = ({navigation}: any) => {
     if (item.title === 'Change Password') {
       navigation.navigate('changepassword');
     }
+    if (item.title === 'Contact Support') {
+      navigation.navigate('Contactsupport');
+    }
+    if (item.title === 'Help Center') {
+      navigation.navigate('Helpcenter');
+    }
+    if (item.title === 'League Settings') {
+      navigation.navigate('Leaguesettings');
+    }
+    if (item.title === 'Legal') {
+      navigation.navigate('Legal');
+    }
+    if (item.title === 'Delete Account') {
+      navigation.navigate('Deleteaccount');
+    }
   };
   return (
     <View style={styles.container}>
@@ -107,6 +122,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
+    paddingBottom:0,
     backgroundColor: 'white',
   },
   heading: {

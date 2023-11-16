@@ -23,24 +23,24 @@ const Signin = ({navigation}: any) => {
     });
   };
 
-  const handleSignin = () => {
-    if (!email || !password) {
-      showSnackbar('All fields are required.');
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      showSnackbar('Invalid email address');
-    } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@,!,#,$,%,*,&]).{6,}$/.test(password)
-    ) {
-      showSnackbar(
-        'Password must contain at least one uppercase, one lowercase and one number with a minimum length of 6',
-      );
-    } else {
-      showSnackbar('Welcome back!');
-      navigation.navigate('Tab');
-      setEmail('');
-      setPassword('');
-    }
-  };
+  // const handleSignin = () => {
+  //   if (!email || !password) {
+  //     showSnackbar('All fields are required.');
+  //   } else if (!/\S+@\S+\.\S+/.test(email)) {
+  //     showSnackbar('Invalid email address');
+  //   } else if (
+  //     !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@,!,#,$,%,*,&]).{6,}$/.test(password)
+  //   ) {
+  //     showSnackbar(
+  //       'Password must contain at least one uppercase, one lowercase and one number with a minimum length of 6',
+  //     );
+  //   } else {
+  //     showSnackbar('Welcome back!');
+  //     navigation.navigate('Tab');
+  //     setEmail('');
+  //     setPassword('');
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -95,7 +95,7 @@ const Signin = ({navigation}: any) => {
           Forgot Password?
         </Text>
       </View>
-      <Text style={styles.signin} onPress={handleSignin}>
+      <Text style={styles.signin} onPress={() => navigation.navigate('Tab')}>
         SIGN IN
       </Text>
       <View style={{alignItems: 'center'}}>

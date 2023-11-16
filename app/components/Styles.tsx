@@ -37,5 +37,40 @@ const commonStyles = StyleSheet.create({
     textDecorationColor: 'blue',
     textDecorationStyle: 'solid',
   },
+  container: {
+    flex: 1,
+  },
+  textstyle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: 'black',
+    marginStart: 30,
+    letterSpacing: 0.5,
+  },
+  headcontainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop:40,
+    paddingBottom: 30,
+    paddingHorizontal:25
+  },
+  bgimg:{
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    position: 'absolute',
+  },
+  itemHeader: {
+    color: '#000',
+    fontSize: 20,
+    fontWeight: '700',
+    paddingBottom: 7,
+  },
+  itemText: {
+    color: '#000',
+    fontSize: 17,
+    fontWeight: '400',
+    lineHeight:23
+  },
 });
 export default commonStyles;

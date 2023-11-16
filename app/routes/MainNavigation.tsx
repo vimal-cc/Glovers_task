@@ -15,6 +15,10 @@ import EventsScreen from '../screens/EventsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
+import ContactSupportScreen from '../screens/ContactSupportScreen';
+import HelpCenterScreen from '../screens/HelpCenterScreen';
+import LegalScreen from '../screens/LegalScreen';
+import LeagueSettingsScreen from '../screens/LeagueSettingsScreen';
 const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
   return (
@@ -88,6 +92,26 @@ const MainNavigation = () => {
         <Stack.Screen
           name="Editprofile"
           component={EditProfileScreen}
+          options={{title: '', headerShown: false}}
+        />
+        <Stack.Screen
+          name="Contactsupport"
+          component={ContactSupportScreen}
+          options={{title: '', headerShown: false}}
+        />
+        <Stack.Screen
+          name="Helpcenter"
+          component={HelpCenterScreen}
+          options={{title: '', headerShown: false}}
+        />
+        <Stack.Screen
+          name="Legal"
+          component={LegalScreen}
+          options={{title: '', headerShown: false}}
+        />
+        <Stack.Screen
+          name="Leaguesettings"
+          component={LeagueSettingsScreen}
           options={{title: '', headerShown: false}}
         />
       </Stack.Navigator>
