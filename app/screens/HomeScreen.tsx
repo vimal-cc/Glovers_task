@@ -317,7 +317,7 @@ const HomeScreen = () => {
               fontWeight: selectedTab === 'myTeams' ? '600' : 'normal',
               color: selectedTab === 'myTeams' ? 'white' : '#005dab',
               backgroundColor: selectedTab === 'myTeams' ? '#005dab' : 'white',
-              paddingHorizontal: selectedTab === 'myTeams' ? 35 : 35,
+              paddingHorizontal: selectedTab === 'myTeams' ? 36 : 35,
               paddingVertical: selectedTab === 'myTeams' ? 12 : 12,
               borderRadius: selectedTab === 'myTeams' ? 30 : 30,
             }}>

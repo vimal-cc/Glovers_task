@@ -28,6 +28,7 @@ const Welcome = ({navigation}: any) => {
             source={require('../assets/images/intro1.png')}
             style={styles.Image1}
           />
+
           <View style={styles.container}>
             <Text style={styles.heading}>
               Find out the results in real{'\n'}time.
@@ -56,6 +57,7 @@ const Welcome = ({navigation}: any) => {
             source={require('../assets/images/intro2.png')}
             style={styles.Image1}
           />
+
           <View style={styles.container}>
             <Text style={styles.heading}>
               Know the statistics of the {'\n'}series
@@ -76,29 +78,30 @@ const Welcome = ({navigation}: any) => {
       )}
       {step === 3 && (
         <View style={styles.body}>
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle="light-content"
-        />
-        <ImageBackground
-          source={require('../assets/images/intro3.png')}
-          style={styles.Image1}
-        />
-        <View style={styles.container}>
-          <Text style={styles.heading}>
-            Get the latest news from{'\n'}the league
-          </Text>
-          <Text style={styles.para}>
-            Follow the news of your team with news and{'\n'}reports.
-          </Text>
-        </View>
-        <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
-          <View style={{flexDirection: 'row-reverse'}}>
-            <Text style={styles.skip}>SKIP</Text>
+          <StatusBar
+            translucent
+            backgroundColor="transparent"
+            barStyle="light-content"
+          />
+          <ImageBackground
+            source={require('../assets/images/intro3.png')}
+            style={styles.Image1}
+          />
+          {/* <View style={styles.bottomOverlay}></View> */}
+          <View style={styles.container}>
+            <Text style={styles.heading}>
+              Get the latest news from{'\n'}the league
+            </Text>
+            <Text style={styles.para}>
+              Follow the news of your team with news and{'\n'}reports.
+            </Text>
           </View>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+            <View style={{flexDirection: 'row-reverse'}}>
+              <Text style={styles.getstarted}>GET STARTED</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -142,6 +145,26 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
     marginRight: 60,
+  },
+  getstarted: {
+    position: 'absolute',
+    bottom: 60,
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
+    marginRight: 60,
+    backgroundColor: '#005dab',
+    paddingHorizontal: 25,
+    paddingVertical: 13,
+    borderRadius: 25,
+  },
+  bottomOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 300,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 

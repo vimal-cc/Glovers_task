@@ -39,6 +39,7 @@ const commonStyles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    backgroundColor:'#fff'
   },
   textstyle: {
     fontSize: 24,

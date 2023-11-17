@@ -19,6 +19,7 @@ import ContactSupportScreen from '../screens/ContactSupportScreen';
 import HelpCenterScreen from '../screens/HelpCenterScreen';
 import LegalScreen from '../screens/LegalScreen';
 import LeagueSettingsScreen from '../screens/LeagueSettingsScreen';
+import NotificationScreen from '../screens/NotificationScreen';
 const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
   return (
@@ -112,6 +113,11 @@ const MainNavigation = () => {
         <Stack.Screen
           name="Leaguesettings"
           component={LeagueSettingsScreen}
+          options={{title: '', headerShown: false}}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={NotificationScreen}
           options={{title: '', headerShown: false}}
         />
       </Stack.Navigator>

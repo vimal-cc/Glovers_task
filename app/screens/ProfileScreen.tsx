@@ -6,8 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Modal,
+  TextInput,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 const Data = [
   {
@@ -40,6 +42,9 @@ const Data = [
 ];
 
 const ProfileScreen = ({navigation}: any) => {
+  const [rateModalVisible, setRateModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState(false);
   const renderItem = ({item}: any) => (
     <TouchableOpacity onPress={() => handlePress(item)}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -51,6 +56,103 @@ const ProfileScreen = ({navigation}: any) => {
           style={{borderBottomColor: '#d9d9d9', borderBottomWidth: 1}}></View>
       )}
     </TouchableOpacity>
+  );
+
+  const RateModal = () => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={rateModalVisible}
+      onRequestClose={() => {
+        setRateModalVisible(!rateModalVisible);
+      }}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={styles.slogan}>Your Opinion matters to us !</Text>
+            <Text style={styles.exp}>Rate your experience</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Image
+                source={require('../assets/images/star_filled.png')}
+                style={styles.star}
+              />
+              <Image
+                source={require('../assets/images/star_filled.png')}
+                style={styles.star}
+              />
+              <Image
+                source={require('../assets/images/star_filled.png')}
+                style={styles.star}
+              />
+              <Image
+                source={require('../assets/images/star_filled.png')}
+                style={styles.star}
+              />
+              <Image
+                source={require('../assets/images/star_empty.png')}
+                style={styles.star}
+              />
+            </View>
+            <TextInput
+              style={styles.textarea}
+              multiline={true}
+              numberOfLines={4}
+              defaultValue="Good"
+            />
+          </View>
+          <View
+            style={{height: 1, backgroundColor: '#d4d4d4', marginBottom: 15}}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: 20,
+            }}>
+            <Text
+              style={styles.button1}
+              onPress={() => setRateModalVisible(!rateModalVisible)}>
+              Not now
+            </Text>
+            <Text style={styles.button2}>Submit</Text>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const DeleteModal = () => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={deleteModalVisible}
+      onRequestClose={() => {
+        setDeleteModalVisible(!deleteModalVisible);
+      }}>
+      <View style={styles.centeredView}>
+        <View style={[styles.modalView]}>
+          <Text style={styles.ques}>
+            Are you sure to delete this {'\n'}account?
+          </Text>
+          <View
+            style={{height: 1, backgroundColor: '#d4d4d4', marginBottom: 15}}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: 20,
+            }}>
+            <Text
+              style={[styles.button1, {paddingHorizontal: 45}]}
+              onPress={() => setDeleteModalVisible(!deleteModalVisible)}>
+              No
+            </Text>
+            <Text style={[styles.button2, {paddingHorizontal: 45}]}>Yes</Text>
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 
   const handlePress = item => {
@@ -70,7 +172,10 @@ const ProfileScreen = ({navigation}: any) => {
       navigation.navigate('Legal');
     }
     if (item.title === 'Delete Account') {
-      navigation.navigate('Deleteaccount');
+      setDeleteModalVisible(!deleteModalVisible);
+    }
+    if (item.title === 'Rate') {
+      setRateModalVisible(!rateModalVisible);
     }
   };
   return (
@@ -85,10 +190,12 @@ const ProfileScreen = ({navigation}: any) => {
           <Text style={styles.profile}>Profile</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
           <Image
             source={require('../assets/images/notification_bell.png')}
             style={styles.logo}
           />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{alignItems: 'center', paddingTop: 20}}>
@@ -108,12 +215,15 @@ const ProfileScreen = ({navigation}: any) => {
         </Text>
         <Text style={styles.prof}>Coach</Text>
       </View>
+
       <FlatList
         data={Data}
         renderItem={renderItem}
         keyExtractor={item => item.key}
         contentContainerStyle={styles.titlecontainer}
       />
+      <RateModal />
+      <DeleteModal />
     </View>
   );
 };
@@ -122,7 +232,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
-    paddingBottom:0,
+    paddingBottom: 0,
     backgroundColor: 'white',
   },
   heading: {
@@ -180,7 +290,81 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#000',
     marginStart: 20,
+    paddingVertical: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textarea: {
+    marginVertical: 20,
+    backgroundColor: 'white',
+    borderWidth: 0.5,
+    borderRadius: 15,
+    borderColor: 'grey',
+    padding: 10,
+    fontSize: 14,
+    fontWeight: '500',
+    textAlignVertical: 'top',
+    width: 280,
+  },
+  slogan: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: 'black',
+    textAlign: 'center',
+  },
+  exp: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: 'black',
     paddingVertical: 20,
+  },
+  star: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+    marginHorizontal: 5,
+  },
+  button1: {
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderWidth: 0.6,
+    borderColor: 'grey',
+    borderRadius: 20,
+  },
+  button2: {
+    paddingHorizontal: 35,
+    paddingVertical: 10,
+    backgroundColor: '#005dab',
+    borderRadius: 20,
+    color: '#fff',
+    fontWeight: '600',
+  },
+  ques: {
+    fontSize: 17,
+    fontWeight: '500',
+    color: 'black',
+    textAlign: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 35,
   },
 });
 export default ProfileScreen;
