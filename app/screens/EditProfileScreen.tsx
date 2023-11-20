@@ -44,10 +44,10 @@ const EditProfileScreen = ({navigation}: any) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          paddingTop: 30,
+          paddingTop: 20,
         }}>
         <TouchableOpacity onPress={() => navigation.goBack('')}>
-          <Image 
+          <Image
             source={require('../assets/images/left_chevron.png')}
             style={{width: 25, height: 28, resizeMode: 'contain'}}></Image>
         </TouchableOpacity>
@@ -57,6 +57,9 @@ const EditProfileScreen = ({navigation}: any) => {
         <Image
           source={require('../assets/images/profileIcon.png')}
           style={styles.Image}></Image>
+        <Image
+          source={require('../assets/images/profile_delete.png')}
+          style={styles.delete}></Image>
       </View>
       <View style={{marginVertical: 25}}>
         <View>
@@ -126,6 +129,16 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     resizeMode: 'stretch',
+    zIndex: 0,
+    position: 'relative',
+  },
+  delete: {
+    width: 30,
+    height: 30,
+    // position: 'absolute',
+    top: -30,
+    left: 35,
+    zIndex: 1,
   },
   text: {
     backgroundColor: '#cecece',

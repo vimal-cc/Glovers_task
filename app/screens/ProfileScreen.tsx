@@ -190,11 +190,11 @@ const ProfileScreen = ({navigation}: any) => {
           <Text style={styles.profile}>Profile</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
-          <Image
-            source={require('../assets/images/notification_bell.png')}
-            style={styles.logo}
-          />
+          <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+            <Image
+              source={require('../assets/images/notification_bell.png')}
+              style={styles.logo}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -262,6 +262,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     resizeMode: 'stretch',
+    zIndex: 0,
   },
   name: {
     color: '#000',

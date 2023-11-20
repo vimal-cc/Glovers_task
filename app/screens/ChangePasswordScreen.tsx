@@ -36,6 +36,7 @@ const ChangePasswordScreen = ({navigation}: any) => {
     } else if (newpassword !== confirmpassword) {
       showSnackbar('passwords do not match');
     } else {
+      showSnackbar('password updated successfully');
       navigation.goBack();
       setOldPassword('');
       setNewPassword('');

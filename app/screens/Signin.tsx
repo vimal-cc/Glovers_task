@@ -23,24 +23,24 @@ const Signin = ({navigation}: any) => {
     });
   };
 
-  // const handleSignin = () => {
-  //   if (!email || !password) {
-  //     showSnackbar('All fields are required.');
-  //   } else if (!/\S+@\S+\.\S+/.test(email)) {
-  //     showSnackbar('Invalid email address');
-  //   } else if (
-  //     !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@,!,#,$,%,*,&]).{6,}$/.test(password)
-  //   ) {
-  //     showSnackbar(
-  //       'Password must contain at least one uppercase, one lowercase and one number with a minimum length of 6',
-  //     );
-  //   } else {
-  //     showSnackbar('Welcome back!');
-  //     navigation.navigate('Tab');
-  //     setEmail('');
-  //     setPassword('');
-  //   }
-  // };
+  const handleSignin = () => {
+    if (!email || !password) {
+      showSnackbar('All fields are required.');
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      showSnackbar('Invalid email address');
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@,!,#,$,%,*,&]).{6,}$/.test(password)
+    ) {
+      showSnackbar(
+        'Password must contain at least one uppercase, one lowercase and one number with a minimum length of 6',
+      );
+    } else {
+      showSnackbar('Welcome back!');
+      navigation.navigate('Tab');
+      setEmail('');
+      setPassword('');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -141,12 +141,12 @@ const Signin = ({navigation}: any) => {
         )}
       </View>
       <Text style={styles.text2}>
-        Glover's{' '}
+        Glover's
         <Text
           style={commonStyles.underlined_text}
           onPress={() => navigation.navigate('TermsandConditions')}>
-          Terms of Service{' '}
-        </Text>{' '}
+          Terms of Service
+        </Text>
         and
         <Text style={commonStyles.underlined_text}> Privacy policy</Text>
       </Text>
@@ -157,7 +157,7 @@ const Signin = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    padding: 25,
     backgroundColor: '#fff',
   },
   logocontainer: {
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#000',
     paddingBottom: 30,
-    paddingStart: 15,
   },
   textinput: {
     flexDirection: 'row',
@@ -236,7 +235,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color: '#000',
-    paddingTop: 20,
+    paddingTop: 10,
     textAlign: 'center',
   },
 });
