@@ -102,6 +102,7 @@ const HomeScreen = () => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
+            <View>
           <Text style={styles.head}>Summer 2023</Text>
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -270,6 +271,7 @@ const HomeScreen = () => {
                 }}
               />
             </View> */}
+            </View>
         </ScrollView>
       );
     }

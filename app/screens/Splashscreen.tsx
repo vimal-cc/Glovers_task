@@ -10,7 +10,7 @@ import React, {useEffect} from 'react';
 const Splashscreen = ({navigation}: any) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Welcome');
+      navigation.replace('Signin');
     }, 3000);
   }, []);
 

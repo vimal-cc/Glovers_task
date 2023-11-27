@@ -10,8 +10,10 @@ import {
 import React, {useState} from 'react';
 import commonStyles from '../components/Styles';
 import Snackbar from 'react-native-snackbar';
+import {useChangePasswordMutation} from '../redux/services/AuthService';
 
 const ChangePasswordScreen = ({navigation}: any) => {
+  const [changePassword] = useChangePasswordMutation();
   const [oldpassword, setOldPassword] = useState('');
   const [newpassword, setNewPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
@@ -24,7 +26,7 @@ const ChangePasswordScreen = ({navigation}: any) => {
     });
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (!oldpassword || !newpassword || !confirmpassword) {
       showSnackbar('All fields are required.');
     } else if (
@@ -37,10 +39,16 @@ const ChangePasswordScreen = ({navigation}: any) => {
       showSnackbar('passwords do not match');
     } else {
       showSnackbar('password updated successfully');
-      navigation.goBack();
-      setOldPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
+      // navigation.goBack();
+      // setOldPassword('');
+      // setNewPassword('');
+      // setConfirmPassword('');
+      let changePasswordReq = {
+        old_password: oldpassword.trim(),
+        new_password: newpassword.trim(),
+        confirm_password: confirmpassword.trim(),
+      };
+      await changePassword(changePasswordReq);
     }
   };
 
@@ -59,7 +67,7 @@ const ChangePasswordScreen = ({navigation}: any) => {
         </TouchableOpacity>
         <Text style={commonStyles.textstyle}>Change Password</Text>
       </View>
-      <View style={{paddingHorizontal:30,marginVertical: 30}}>
+      <View style={{paddingHorizontal: 30, marginVertical: 30}}>
         <View style={commonStyles.textinput}>
           <Text style={commonStyles.label}>Old Password</Text>
           <TextInput
@@ -126,7 +134,12 @@ const ChangePasswordScreen = ({navigation}: any) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between',paddingHorizontal:30}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingHorizontal: 30,
+        }}>
         <Text onPress={() => navigation.goBack()} style={styles.text}>
           CANCEL
         </Text>
@@ -143,9 +156,9 @@ const ChangePasswordScreen = ({navigation}: any) => {
 export default ChangePasswordScreen;
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'#fff'
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
   text: {
     backgroundColor: '#cecece',

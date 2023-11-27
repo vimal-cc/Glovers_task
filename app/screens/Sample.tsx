@@ -13,7 +13,7 @@ const DropdownComponent = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
 
-  const options: string[] = ['Option 1', 'Option 2', 'Option 3'];
+  const options: string[] = ['Coach', 'Staff', 'Player'];
 
   const handleDropdownToggle = () => {
     setIsDropdownVisible(!isDropdownVisible);

@@ -11,8 +11,10 @@ import {
 import React, {useState} from 'react';
 import Snackbar from 'react-native-snackbar';
 import commonStyles from '../components/Styles';
+import {useLoginMutation} from '../redux/services/AuthService';
 
 const Signin = ({navigation}: any) => {
+  const [login] = useLoginMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setPasswordVisible] = useState(true);
@@ -23,13 +25,15 @@ const Signin = ({navigation}: any) => {
     });
   };
 
-  const handleSignin = () => {
+  const handleSignin = async () => {
     if (!email || !password) {
       showSnackbar('All fields are required.');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       showSnackbar('Invalid email address');
     } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@,!,#,$,%,*,&]).{6,}$/.test(password)
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@,!,#,$,%,*,&]).{6,}$/.test(
+        password,
+      )
     ) {
       showSnackbar(
         'Password must contain at least one uppercase, one lowercase and one number with a minimum length of 6',
@@ -37,8 +41,13 @@ const Signin = ({navigation}: any) => {
     } else {
       showSnackbar('Welcome back!');
       navigation.navigate('Tab');
-      setEmail('');
-      setPassword('');
+      // setEmail(' ');
+      // setPassword(' ');
+      let loginReq = {
+        email: email.trim().toLowerCase(),
+        password: password.trim(),
+      };
+      await login(loginReq);
     }
   };
 
@@ -95,7 +104,7 @@ const Signin = ({navigation}: any) => {
           Forgot Password?
         </Text>
       </View>
-      <Text style={styles.signin} onPress={() => navigation.navigate('Tab')}>
+      <Text style={styles.signin} onPress={handleSignin}>
         SIGN IN
       </Text>
       <View style={{alignItems: 'center'}}>

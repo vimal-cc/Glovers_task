@@ -13,8 +13,10 @@ import React, {useState, useRef} from 'react';
 import Snackbar from 'react-native-snackbar';
 import commonStyles from '../components/Styles';
 import DropdownComponent from './Sample';
+import {useCreateNewUserMutation} from '../redux/services/AuthService';
 
 const Signup = ({navigation}: any) => {
+  const [createNewUser] = useCreateNewUserMutation();
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,7 +32,7 @@ const Signup = ({navigation}: any) => {
     });
   };
 
-  const handleSignin = () => {
+  const handleSignin = async () => {
     if (!firstname || !lastname || !email || !password || !confirmpassword) {
       showSnackbar('All fields are required.');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -44,13 +46,22 @@ const Signup = ({navigation}: any) => {
     } else if (password !== confirmpassword) {
       showSnackbar('passwords do not match');
     } else {
+      // setFirstName('');
+      // setLastName('');
+      // setEmail('');
+      // setSelectedOption('');
+      // setPassword('');
+      // setConfirmPassword('');
+      let createNewUserReq = {
+        first_name: firstname.trim(),
+        last_name: lastname.trim(),
+        email: email.trim().toLowerCase(),
+        password: password.trim(),
+        confirmpassword: confirmpassword.trim(),
+        roles: 'coach',
+      };
+      await createNewUser(createNewUserReq);
       navigation.navigate('Tab');
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setSelectedOption('');
-      setPassword('');
-      setConfirmPassword('');
     }
   };
 
