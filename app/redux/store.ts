@@ -25,7 +25,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: [], // deletes all state value except "auth" state value
+  whitelist: [],
   blacklist: [],
 };
 

@@ -38,17 +38,17 @@ const ChangePasswordScreen = ({navigation}: any) => {
     } else if (newpassword !== confirmpassword) {
       showSnackbar('passwords do not match');
     } else {
-      showSnackbar('password updated successfully');
-      // navigation.goBack();
-      // setOldPassword('');
-      // setNewPassword('');
-      // setConfirmPassword('');
       let changePasswordReq = {
         old_password: oldpassword.trim(),
         new_password: newpassword.trim(),
         confirm_password: confirmpassword.trim(),
       };
       await changePassword(changePasswordReq);
+      showSnackbar('password updated successfully');
+      navigation.goBack();
+      setOldPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
     }
   };
 

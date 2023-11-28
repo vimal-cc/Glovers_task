@@ -9,22 +9,28 @@ import {
 import React, {useState} from 'react';
 import commonStyles from '../components/Styles';
 import Snackbar from 'react-native-snackbar';
+import {useForgotPasswordMutation} from '../redux/services/AuthService';
 
 const Forgotpasswordscreen = ({navigation}: any) => {
+  const [forgotPassword] = useForgotPasswordMutation();
   const [email, setEmail] = useState('');
   const showSnackbar = (message: string) => {
     Snackbar.show({
       text: message,
     });
   };
-  const handleSignin = () => {
+  const handleSignin = async () => {
     if (!email) {
       showSnackbar('Email address required.');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       showSnackbar('Invalid email address');
     } else {
-      navigation.navigate('Signin');
-      setEmail('');
+      // navigation.navigate('Signin');
+      // setEmail('');
+      let forgotPasswordReq = {
+        email: email.trim().toLowerCase(),
+      };
+      await forgotPassword(forgotPasswordReq);
     }
   };
   return (

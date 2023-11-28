@@ -1,5 +1,5 @@
 import {HTTPClient} from '../../utils/HttpsClient';
-import {LOGIN, REGISTER, CHANGE_PASSWORD,EVENTS_LIST} from '../../utils/URL';
+import {LOGIN, REGISTER, CHANGE_PASSWORD,FORGOT_PASSWORD} from '../../utils/URL';
 
 export const authService = HTTPClient.injectEndpoints({
   endpoints: build => ({
@@ -24,12 +24,13 @@ export const authService = HTTPClient.injectEndpoints({
         body: changePassword,
       }),
     }),
-    getEventsList: build.query({
-      query: () => ({
-        url: EVENTS_LIST,
-        method: 'GET',
+    forgotPassword: build.mutation({
+      query: forgotPassword => ({
+        url: FORGOT_PASSWORD,
+        method: 'POST',
+        body: forgotPassword,
       }),
-    }),
+    }), 
   }),
   overrideExisting: true,
 });
@@ -38,4 +39,5 @@ export const {
   useLoginMutation,
   useCreateNewUserMutation,
   useChangePasswordMutation,
+  useForgotPasswordMutation,
 } = authService;

@@ -7,14 +7,15 @@ import {
   TouchableOpacity,
   StatusBar,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Snackbar from 'react-native-snackbar';
 import commonStyles from '../components/Styles';
 import {useLoginMutation} from '../redux/services/AuthService';
 
 const Signin = ({navigation}: any) => {
-  const [login] = useLoginMutation();
+  const [login, {isSuccess, data, isLoading}] = useLoginMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setPasswordVisible] = useState(true);
@@ -24,8 +25,12 @@ const Signin = ({navigation}: any) => {
       text: message,
     });
   };
+  
 
   const handleSignin = async () => {
+    if (isLoading) {
+      return;
+    }
     if (!email || !password) {
       showSnackbar('All fields are required.');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -39,18 +44,29 @@ const Signin = ({navigation}: any) => {
         'Password must contain at least one uppercase, one lowercase and one number with a minimum length of 6',
       );
     } else {
-      showSnackbar('Welcome back!');
-      navigation.navigate('Tab');
-      // setEmail(' ');
-      // setPassword(' ');
       let loginReq = {
         email: email.trim().toLowerCase(),
         password: password.trim(),
       };
-      await login(loginReq);
+      await login(loginReq); 
+      showSnackbar('Welcome back');
+      navigation.navigate('Tab')
     }
   };
 
+  useEffect(() => {
+    if (data?.code === 0) {
+      if (isSuccess) {
+        showSnackbar('Welcome back!');
+        navigation.navigate('Tab');
+      setEmail(' ');
+      setPassword(' ');
+      }     
+    } 
+    // else {
+    //   showSnackbar('Invalid data');
+    // }
+  }, [isSuccess]);
   return (
     <View style={styles.container}>
       <StatusBar
@@ -105,7 +121,11 @@ const Signin = ({navigation}: any) => {
         </Text>
       </View>
       <Text style={styles.signin} onPress={handleSignin}>
-        SIGN IN
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          'SIGN IN'
+        )}
       </Text>
       <View style={{alignItems: 'center'}}>
         <View

@@ -7,7 +7,7 @@ import HomeSample from './app/screens/HomeSample';
 const App = () => {
   return (
     <Provider store={store}>
-      <HomeSample />
+      <MainNavigation />
     </Provider>
   );
 };

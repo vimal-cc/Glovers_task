@@ -10,6 +10,7 @@ import {
   TextInput,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 
 const Data = [
   {
@@ -42,6 +43,8 @@ const Data = [
 ];
 
 const ProfileScreen = ({navigation}: any) => {
+  const userDetails = useSelector(state => state.auth.userDetails);
+  console.log('Profile------->', userDetails);
   const [rateModalVisible, setRateModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState(false);
@@ -203,7 +206,7 @@ const ProfileScreen = ({navigation}: any) => {
           source={require('../assets/images/profileIcon.png')}
           style={styles.Image}></Image>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={styles.name}>Davis Patrick</Text>
+          <Text style={styles.name}>{userDetails?.username}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Editprofile')}>
             <Image
               source={require('../assets/images/imgEditIcon.png')}
@@ -211,9 +214,9 @@ const ProfileScreen = ({navigation}: any) => {
           </TouchableOpacity>
         </View>
         <Text style={{color: '#000', fontSize: 18, fontWeight: '400'}}>
-          vishnukumar01@gmail.com
+          {userDetails?.email}
         </Text>
-        <Text style={styles.prof}>Coach</Text>
+        <Text style={styles.prof}>{userDetails?.roles}</Text>
       </View>
 
       <FlatList

@@ -3,6 +3,7 @@ import {authService} from '../services/AuthService';
 
 const initialState = {
   tokenDetails: null,
+  userDetails: null,
 };
 
 export const authSlice = createSlice({
@@ -20,9 +21,9 @@ export const authSlice = createSlice({
         (state, {payload}) => {
           console.log('hi1', payload);
           if (payload.code === 0) {
-            const navigation = useNavigation();
-            navigation.navigate('Tab');
-            state.tokenDetails = payload.token;
+            console.log('login successful', payload);
+            state.tokenDetails = payload.data.token_details;
+            state.userDetails = payload.data.user;
           }
         },
       )
@@ -38,18 +39,18 @@ export const authSlice = createSlice({
       .addMatcher(
         authService.endpoints.changePassword.matchFulfilled,
         (state, {payload}) => {
-          console.log('no', payload);
+          // console.log('no', payload);
           if (payload.code === 0) {
             console.log('Password changed', payload);
           }
         },
       )
       .addMatcher(
-        authService.endpoints.getEventsList.matchFulfilled,
+        authService.endpoints.forgotPassword.matchFulfilled,
         (state, {payload}) => {
           console.log('no', payload);
           if (payload.code === 0) {
-            console.log('events', payload);
+            console.log('successful', payload);
           }
         },
       );

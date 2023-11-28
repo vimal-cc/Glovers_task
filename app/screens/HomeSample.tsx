@@ -204,7 +204,7 @@ const HomeSample = () => {
                     {innerItem.urText && (
                       <Text style={styles.ur_text}>{innerItem.urText}</Text>
                     )}
-                     numColumns={2}
+                     
                   </View>
                 ))}
               </>

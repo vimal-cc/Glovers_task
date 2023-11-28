@@ -6,13 +6,19 @@ import {
   StatusBar,
 } from 'react-native';
 import React, {useEffect} from 'react';
+import {useSelector} from 'react-redux';
 
 const Splashscreen = ({navigation}: any) => {
+  const tokenDetails = useSelector((state: any) => state.auth.tokenDetails);
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Signin');
+      if (tokenDetails) {
+        navigation.replace('Tab');
+      } else {
+        navigation.replace('Signin');
+      }
     }, 3000);
-  }, []);
+  }, [tokenDetails, navigation]);
 
   return (
     <View style={styles.container}>
