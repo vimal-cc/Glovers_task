@@ -45,6 +45,7 @@ const ChangePasswordScreen = ({navigation}: any) => {
       };
       await changePassword(changePasswordReq);
       showSnackbar('password updated successfully');
+
       navigation.goBack();
       setOldPassword('');
       setNewPassword('');
