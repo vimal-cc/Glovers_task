@@ -1,5 +1,5 @@
 import {HTTPClient} from '../../utils/HttpsClient';
-import {LOGIN, REGISTER, CHANGE_PASSWORD,FORGOT_PASSWORD} from '../../utils/URL';
+import {LOGIN, REGISTER, CHANGE_PASSWORD,FORGOT_PASSWORD,EVENTS_LIST} from '../../utils/URL';
 
 export const authService = HTTPClient.injectEndpoints({
   endpoints: build => ({
@@ -25,6 +25,13 @@ export const authService = HTTPClient.injectEndpoints({
       }),
     }),
     forgotPassword: build.mutation({
+      query: forgotPassword => ({
+        url: FORGOT_PASSWORD,
+        method: 'POST',
+        body: forgotPassword,
+      }),
+    }), 
+    getEvents: build.query({
       query: forgotPassword => ({
         url: FORGOT_PASSWORD,
         method: 'POST',
