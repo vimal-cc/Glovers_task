@@ -1,5 +1,12 @@
 import {HTTPClient} from '../../utils/HttpsClient';
-import {LOGIN, REGISTER, CHANGE_PASSWORD,FORGOT_PASSWORD,EVENTS_LIST} from '../../utils/URL';
+import {
+  LOGIN,
+  REGISTER,
+  CHANGE_PASSWORD,
+  FORGOT_PASSWORD,
+  EVENTS_LIST,
+  GET_NOTIFICATIONS,
+} from '../../utils/URL';
 
 export const authService = HTTPClient.injectEndpoints({
   endpoints: build => ({
@@ -30,14 +37,20 @@ export const authService = HTTPClient.injectEndpoints({
         method: 'POST',
         body: forgotPassword,
       }),
-    }), 
+    }),
     getEvents: build.query({
-      query: forgotPassword => ({
-        url: FORGOT_PASSWORD,
-        method: 'POST',
-        body: forgotPassword,
+      query: getEvents => ({
+        url: EVENTS_LIST,
+        method: 'GET',
+        body: getEvents,
       }),
-    }), 
+    }),
+    getNotifications: build.query({
+      query: ({ limit, offset }) => ({
+        url:`${GET_NOTIFICATIONS}limit=${limit}&offset=${offset}`,
+        method: 'GET',
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -47,4 +60,6 @@ export const {
   useCreateNewUserMutation,
   useChangePasswordMutation,
   useForgotPasswordMutation,
+  useGetEventsQuery,
+  useGetNotificationsQuery
 } = authService;

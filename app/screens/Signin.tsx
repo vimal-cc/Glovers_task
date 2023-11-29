@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Platform,
-  ActivityIndicator,
+  // ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Snackbar from 'react-native-snackbar';
@@ -26,7 +26,6 @@ const Signin = ({navigation}: any) => {
     });
   };
   
-
   const handleSignin = async () => {
     if (isLoading) {
       return;
@@ -49,8 +48,8 @@ const Signin = ({navigation}: any) => {
         password: password.trim(),
       };
       await login(loginReq); 
-      showSnackbar('Welcome back');
-      navigation.navigate('Tab')
+      // showSnackbar('Welcome back');
+      // navigation.navigate('Tab')
     }
   };
 
@@ -59,8 +58,8 @@ const Signin = ({navigation}: any) => {
       if (isSuccess) {
         showSnackbar('Welcome back!');
         navigation.navigate('Tab');
-      setEmail(' ');
-      setPassword(' ');
+      // setEmail(' ');
+      // setPassword(' ');
       }     
     } 
     // else {
@@ -121,11 +120,12 @@ const Signin = ({navigation}: any) => {
         </Text>
       </View>
       <Text style={styles.signin} onPress={handleSignin}>
-        {isLoading ? (
+        {/* {isLoading ? (
           <ActivityIndicator size="small" color="#fff" />
         ) : (
           'SIGN IN'
-        )}
+        )} */}
+        SIGN IN
       </Text>
       <View style={{alignItems: 'center'}}>
         <View

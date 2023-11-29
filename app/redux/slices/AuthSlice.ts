@@ -4,6 +4,8 @@ import {authService} from '../services/AuthService';
 const initialState = {
   tokenDetails: null,
   userDetails: null,
+  eventsData: null,
+  notificationsData: null,
 };
 
 export const authSlice = createSlice({
@@ -12,8 +14,16 @@ export const authSlice = createSlice({
   reducers: {
     isLogout: (state, action) => {
       state.tokenDetails = null;
+      state.userDetails = null;
+    },
+    setEventsData: (state, action) => {
+      state.eventsData = action.payload;
+    },
+    setNotificationsData: (state, action) => {
+      state.notificationsData = action.payload;
     },
   },
+
   extraReducers: builder => {
     builder
       .addMatcher(
@@ -48,15 +58,35 @@ export const authSlice = createSlice({
       .addMatcher(
         authService.endpoints.forgotPassword.matchFulfilled,
         (state, {payload}) => {
-          console.log('no', payload);
+          //  console.log('no',payload);
           if (payload.code === 0) {
             console.log('successful', payload);
+          }
+        },
+      )
+      .addMatcher(
+        authService.endpoints.getEvents.matchFulfilled,
+        (state, {payload}) => {
+          if (payload.code === 0) {
+            state.eventsData = payload.data;
+          } else {
+            console.error('Failed to fetch events:', payload.message);
+          }
+        },
+      )
+      .addMatcher(
+        authService.endpoints.getNotifications.matchFulfilled,
+        (state, {payload}) => {
+          if (payload.code === 0) {
+            state.notificationsData = payload.data;
+          } else {
+            console.error('Failed to fetch notifications:', payload.message);
           }
         },
       );
   },
 });
 
-export const {isLogout} = authSlice.actions;
+export const {isLogout, setEventsData,setNotificationsData} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -25,8 +25,8 @@ const Forgotpasswordscreen = ({navigation}: any) => {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       showSnackbar('Invalid email address');
     } else {
-      // navigation.navigate('Signin');
-      // setEmail('');
+      navigation.navigate('Signin');
+      setEmail('');
       let forgotPasswordReq = {
         email: email.trim().toLowerCase(),
       };
