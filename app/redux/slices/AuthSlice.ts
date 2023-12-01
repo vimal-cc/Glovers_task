@@ -4,8 +4,9 @@ import {authService} from '../services/AuthService';
 const initialState = {
   tokenDetails: null,
   userDetails: null,
-  eventsData: null,
   notificationsData: null,
+  eventsData: null,
+  gameList: null,
 };
 
 export const authSlice = createSlice({
@@ -16,11 +17,14 @@ export const authSlice = createSlice({
       state.tokenDetails = null;
       state.userDetails = null;
     },
+    setNotificationsData: (state, action) => {
+      state.notificationsData = action.payload;
+    },
     setEventsData: (state, action) => {
       state.eventsData = action.payload;
     },
-    setNotificationsData: (state, action) => {
-      state.notificationsData = action.payload;
+    setGameList: (state, action) => {
+      state.gameList = action.payload;
     },
   },
 
@@ -29,7 +33,6 @@ export const authSlice = createSlice({
       .addMatcher(
         authService.endpoints.login.matchFulfilled,
         (state, {payload}) => {
-          console.log('hi1', payload);
           if (payload.code === 0) {
             console.log('login successful', payload);
             state.tokenDetails = payload.data.token_details;
@@ -65,7 +68,17 @@ export const authSlice = createSlice({
         },
       )
       .addMatcher(
-        authService.endpoints.getEvents.matchFulfilled,
+        authService.endpoints.getNotifications.matchFulfilled,
+        (state, {payload}) => {
+          if (payload.code === 0) {
+            state.notificationsData = payload.data;
+          } else {
+            console.error('Failed to fetch notifications:', payload.message);
+          }
+        },
+      )
+      .addMatcher(
+        authService.endpoints.getEventsList.matchFulfilled,
         (state, {payload}) => {
           if (payload.code === 0) {
             state.eventsData = payload.data;
@@ -75,18 +88,21 @@ export const authSlice = createSlice({
         },
       )
       .addMatcher(
-        authService.endpoints.getNotifications.matchFulfilled,
+        authService.endpoints.getGameList.matchFulfilled,
         (state, {payload}) => {
           if (payload.code === 0) {
-            state.notificationsData = payload.data;
+            state.gameList = payload.data;
+            console.log('Game list fetched successfully', payload);
+            // Update your state accordingly
           } else {
-            console.error('Failed to fetch notifications:', payload.message);
+            console.error('Failed to fetch game list:', payload.message);
           }
         },
       );
   },
 });
 
-export const {isLogout, setEventsData,setNotificationsData} = authSlice.actions;
+export const {isLogout, setNotificationsData, setEventsData, setGameList} =
+  authSlice.actions;
 
 export default authSlice.reducer;

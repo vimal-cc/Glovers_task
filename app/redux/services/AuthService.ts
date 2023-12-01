@@ -4,8 +4,9 @@ import {
   REGISTER,
   CHANGE_PASSWORD,
   FORGOT_PASSWORD,
-  EVENTS_LIST,
   GET_NOTIFICATIONS,
+  EVENTS_LIST,
+  GAME_LIST,
 } from '../../utils/URL';
 
 export const authService = HTTPClient.injectEndpoints({
@@ -38,16 +39,21 @@ export const authService = HTTPClient.injectEndpoints({
         body: forgotPassword,
       }),
     }),
-    getEvents: build.query({
-      query: getEvents => ({
-        url: EVENTS_LIST,
+    getNotifications: build.query({
+      query: ({limit, offset}) => ({
+        url: `${GET_NOTIFICATIONS}limit=${limit}&offset=${offset}`,
         method: 'GET',
-        body: getEvents,
       }),
     }),
-    getNotifications: build.query({
-      query: ({ limit, offset }) => ({
-        url:`${GET_NOTIFICATIONS}limit=${limit}&offset=${offset}`,
+    getEventsList: build.query({
+      query: ({limit, offset}) => ({
+        url: `${EVENTS_LIST}?limit=${limit}&offset=${offset}`,
+        method: 'GET',
+      }),
+    }),
+    getGameList: build.query({
+      query: ({limit, offset}) => ({
+        url: `${GAME_LIST}?limit=${limit}&offset=${offset}`,
         method: 'GET',
       }),
     }),
@@ -60,6 +66,7 @@ export const {
   useCreateNewUserMutation,
   useChangePasswordMutation,
   useForgotPasswordMutation,
-  useGetEventsQuery,
-  useGetNotificationsQuery
+  useGetNotificationsQuery,
+  useGetEventsListQuery,
+  useGetGameListQuery,
 } = authService;

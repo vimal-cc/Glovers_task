@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,9 +8,30 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import {useGetGameListQuery} from '../redux/services/AuthService';
 
 const HomeScreen = () => {
   const [selectedTab, setSelectedTab] = useState('allGames');
+  const {
+    data: gameListData,
+    error: gameListError,
+    isLoading: gameListLoading,
+  } = useGetGameListQuery({
+    limit: 10,
+    offset: 0,
+  });
+
+  useEffect(() => {
+    if (gameListError) {
+      console.error('Error fetching game list:', gameListError);
+    }
+    if (gameListLoading) {
+      console.log('Loading game list...');
+    }
+    if (gameListData) {
+      console.log('Game list data:', gameListData);
+    }
+  }, [gameListData, gameListError, gameListLoading]);
 
   const renderContent = () => {
     if (selectedTab === 'allGames') {
@@ -102,94 +123,138 @@ const HomeScreen = () => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
-            <View>
-          <Text style={styles.head}>Summer 2023</Text>
+          <View>
+            <Text style={styles.head}>Summer 2023</Text>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={styles.box1}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={styles.baseballcontainer}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={styles.box1}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={styles.baseballcontainer}>
+                    <Image
+                      source={require('../assets/images/baseballImg.png')}
+                      style={{width: 38, height: 38, resizeMode: 'cover'}}
+                    />
+                  </View>
                   <Image
-                    source={require('../assets/images/baseballImg.png')}
-                    style={{width: 38, height: 38, resizeMode: 'cover'}}
+                    source={require('../assets/images/red_profile.png')}
+                    style={styles.img1}
                   />
+                  <Text style={styles.place}>COACH</Text>
                 </View>
-                <Image
-                  source={require('../assets/images/red_profile.png')}
-                  style={styles.img1}
-                />
-                <Text style={styles.place}>COACH</Text>
-              </View>
-              <View style={[styles.natimage, {paddingStart: 15}]}>
-                <Image
-                  source={require('../assets/images/Splash.jpeg')}
-                  style={{width: 35, height: 35, borderRadius: 20}}
-                />
-                <Text style={[styles.txt, {padding: 10}]}>
-                  Milwaukee {'\n'}Brewers
+                <View style={[styles.natimage, {paddingStart: 15}]}>
+                  <Image
+                    source={require('../assets/images/Splash.jpeg')}
+                    style={{width: 35, height: 35, borderRadius: 20}}
+                  />
+                  <Text style={[styles.txt, {padding: 10}]}>
+                    Milwaukee {'\n'}Brewers
+                  </Text>
+                </View>
+                <Text style={[styles.number, {textAlign: 'center'}]}>
+                  1 - 0
                 </Text>
               </View>
-              <Text style={[styles.number, {textAlign: 'center'}]}>1 - 0</Text>
-            </View>
-            <View style={styles.box1}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={styles.baseballcontainer}>
+              <View style={styles.box1}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={styles.baseballcontainer}>
+                    <Image
+                      source={require('../assets/images/baseballImg.png')}
+                      style={{width: 38, height: 38, resizeMode: 'cover'}}
+                    />
+                  </View>
                   <Image
-                    source={require('../assets/images/baseballImg.png')}
-                    style={{width: 38, height: 38, resizeMode: 'cover'}}
+                    source={require('../assets/images/red_profile.png')}
+                    style={styles.img1}
                   />
+                  <Text style={styles.place}>COACH</Text>
                 </View>
-                <Image
-                  source={require('../assets/images/red_profile.png')}
-                  style={styles.img1}
-                />
-                <Text style={styles.place}>COACH</Text>
+                <View style={[styles.natimage, {paddingStart: 15}]}>
+                  <Image
+                    source={require('../assets/images/playerDP.png')}
+                    style={{width: 35, height: 35, borderRadius: 20}}
+                  />
+                  <Text
+                    style={[
+                      styles.txt,
+                      {paddingHorizontal: 10, paddingVertical: 20},
+                    ]}>
+                    King Tigers
+                  </Text>
+                </View>
+                <Text style={[styles.number, {textAlign: 'center'}]}>
+                  0 - 0
+                </Text>
+                <Text style={styles.ur_text}>UR</Text>
               </View>
-              <View style={[styles.natimage, {paddingStart: 15}]}>
-                <Image
-                  source={require('../assets/images/playerDP.png')}
-                  style={{width: 35, height: 35, borderRadius: 20}}
-                />
+            </View>
+            <Text style={styles.head}>Spring 2023</Text>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={styles.box1}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={styles.baseballcontainer}>
+                    <Image
+                      source={require('../assets/images/baseballImg.png')}
+                      style={{width: 38, height: 38, resizeMode: 'cover'}}
+                    />
+                  </View>
+                  <Image
+                    source={require('../assets/images/red_profile.png')}
+                    style={styles.img1}
+                  />
+                  <Text style={styles.place}>COACH</Text>
+                </View>
+                <View style={[styles.natimage, {paddingStart: 15}]}>
+                  <Image
+                    source={require('../assets/images/Splash.jpeg')}
+                    style={{width: 35, height: 35, borderRadius: 20}}
+                  />
+                  <Text style={[styles.txt, {padding: 10}]}>
+                    Chicago {'\n'}Cubs
+                  </Text>
+                </View>
+                <Text style={[styles.number, {textAlign: 'center'}]}>
+                  0 - 0
+                </Text>
+              </View>
+              <View style={styles.box1}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={styles.baseballcontainer}>
+                    <Image
+                      source={require('../assets/images/baseballImg.png')}
+                      style={{width: 38, height: 38, resizeMode: 'cover'}}
+                    />
+                  </View>
+                  <Image
+                    source={require('../assets/images/red_profile.png')}
+                    style={styles.img1}
+                  />
+                  <Text style={styles.place}>COACH</Text>
+                </View>
+                <View style={[styles.natimage, {paddingStart: 15}]}>
+                  <Image
+                    source={require('../assets/images/playerDP.png')}
+                    style={{width: 35, height: 35, borderRadius: 20}}
+                  />
+                  <Text
+                    style={[
+                      styles.txt,
+                      {paddingHorizontal: 10, paddingVertical: 20},
+                    ]}>
+                    Falkland.Gil.
+                  </Text>
+                </View>
                 <Text
                   style={[
-                    styles.txt,
-                    {paddingHorizontal: 10, paddingVertical: 20},
+                    styles.number,
+                    {textAlign: 'center', paddingBottom: 25},
                   ]}>
-                  King Tigers
+                  0 - 0
                 </Text>
               </View>
-              <Text style={[styles.number, {textAlign: 'center'}]}>0 - 0</Text>
-              <Text style={styles.ur_text}>UR</Text>
             </View>
-          </View>
-          <Text style={styles.head}>Spring 2023</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={styles.box1}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={styles.baseballcontainer}>
-                  <Image
-                    source={require('../assets/images/baseballImg.png')}
-                    style={{width: 38, height: 38, resizeMode: 'cover'}}
-                  />
-                </View>
-                <Image
-                  source={require('../assets/images/red_profile.png')}
-                  style={styles.img1}
-                />
-                <Text style={styles.place}>COACH</Text>
-              </View>
-              <View style={[styles.natimage, {paddingStart: 15}]}>
-                <Image
-                  source={require('../assets/images/Splash.jpeg')}
-                  style={{width: 35, height: 35, borderRadius: 20}}
-                />
-                <Text style={[styles.txt, {padding: 10}]}>
-                  Chicago {'\n'}Cubs
-                </Text>
-              </View>
-              <Text style={[styles.number, {textAlign: 'center'}]}>0 - 0</Text>
-            </View>
-            <View style={styles.box1}>
+            <View style={[styles.box1, {marginTop: 30}]}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View style={styles.baseballcontainer}>
                   <Image
@@ -219,45 +284,12 @@ const HomeScreen = () => {
               <Text
                 style={[
                   styles.number,
-                  {textAlign: 'center', paddingBottom: 25},
+                  {textAlign: 'center', paddingBottom: 20},
                 ]}>
                 0 - 0
               </Text>
             </View>
-          </View>
-          <View style={[styles.box1, {marginTop: 30}]}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={styles.baseballcontainer}>
-                <Image
-                  source={require('../assets/images/baseballImg.png')}
-                  style={{width: 38, height: 38, resizeMode: 'cover'}}
-                />
-              </View>
-              <Image
-                source={require('../assets/images/red_profile.png')}
-                style={styles.img1}
-              />
-              <Text style={styles.place}>COACH</Text>
-            </View>
-            <View style={[styles.natimage, {paddingStart: 15}]}>
-              <Image
-                source={require('../assets/images/playerDP.png')}
-                style={{width: 35, height: 35, borderRadius: 20}}
-              />
-              <Text
-                style={[
-                  styles.txt,
-                  {paddingHorizontal: 10, paddingVertical: 20},
-                ]}>
-                Falkland.Gil.
-              </Text>
-            </View>
-            <Text
-              style={[styles.number, {textAlign: 'center', paddingBottom: 20}]}>
-              0 - 0
-            </Text>
-          </View>
-          {/* <View
+            {/* <View
               style={{
                 alignItems: 'flex-end',
               }}>
@@ -271,7 +303,7 @@ const HomeScreen = () => {
                 }}
               />
             </View> */}
-            </View>
+          </View>
         </ScrollView>
       );
     }

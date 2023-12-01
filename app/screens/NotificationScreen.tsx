@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,17 +8,17 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import { useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import commonStyles from '../components/Styles';
-import { useGetNotificationsQuery } from '../redux/services/AuthService';
-import { setNotificationsData } from '../redux/slices/AuthSlice';
+import {setNotificationsData} from '../redux/slices/AuthSlice';
+import {useGetNotificationsQuery} from '../redux/services/AuthService';
 
 const data = [
   {id: '1', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '2', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '3', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '4', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '5', content: 'Milwakee Brewers vs SK event is going to start'},
+  {id: '2', content: 'Milwakee Brewers vs SK event is going to start'},
+  {id: '3', content: 'Milwakee Brewers vs SK event is going to start'},
+  {id: '4', content: 'Milwakee Brewers vs SK event is going to start'},
+  {id: '5', content: 'Milwakee Brewers vs SK event is going to start'},
   // {id: '6', content: 'Milwakee Brewers vs SK event is going to start'},
   // {id: '7', content: 'Milwakee Brewers vs SK event is going to start'},
   // {id: '8', content: 'Milwakee Brewers vs SK event is going to start'},
@@ -26,17 +26,19 @@ const data = [
 ];
 
 const NotificationScreen = ({navigation}: any) => {
-  console.log('notify',);
+  console.log('notify');
   const dispatch = useDispatch();
-  const { data: notificationsData, error } = useGetNotificationsQuery({
-    limit: 10, 
-    offset: 0, 
+  const {data: notificationsData, error} = useGetNotificationsQuery({
+    limit: 10,
+    offset: 0,
   });
+
   useEffect(() => {
     if (notificationsData) {
       dispatch(setNotificationsData(notificationsData));
     }
   }, [notificationsData, dispatch]);
+
   const renderItem = ({item}: any) => (
     <View style={styles.paracontainer}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -101,6 +103,6 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 13,
     fontWeight: '400',
-    color:'#000'
+    color: '#000',
   },
 });

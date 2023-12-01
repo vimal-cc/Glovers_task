@@ -1,7 +1,10 @@
-import {View, Text, StatusBar, Image, StyleSheet, FlatList} from 'react-native';
-import React from 'react';
+import React, { useEffect,useState } from 'react';
+import { View, Text, StatusBar, Image, StyleSheet, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useGetEventsListQuery } from '../redux/services/AuthService';
+import { setEventsData } from '../redux/slices/AuthSlice';
 
-const eventsData = [
+const Data = [
   {
     id: '1',
     day: 'TUE',
@@ -77,69 +80,90 @@ const eventsData = [
       image: require('../assets/images/Splash.jpeg'),
     },
   },
-  {
-    id: '6',
-    day: 'SAT',
-    date: '06',
-    status: 'COMPLETED',
-    time: '02:51 AM',
-    team1: {
-      name: 'Milwaukee\nBrewers',
-      image: require('../assets/images/img.png'),
-    },
-    team2: {
-      name: 'SK',
-      image: require('../assets/images/Splash.jpeg'),
-    },
-  },
-  {
-    id: '7',
-    day: 'MON',
-    date: '08',
-    status: 'COMPLETED',
-    time: '9.15 AM',
-    team1: {
-      name: 'Chicago Cubs',
-      image: require('../assets/images/Splash.jpeg'),
-    },
-    team2: {
-      name: 'RED SCX',
-      image: require('../assets/images/red.jpg'),
-    },
-  },
-  {
-    id: '8',
-    day: 'TUE',
-    date: '09',
-    status: 'COMPLETED',
-    time: '9.15 AM',
-    team1: {
-      name: 'Chicago Cubs',
-      image: require('../assets/images/Splash.jpeg'),
-    },
-    team2: {
-      name: 'RED SCX',
-      image: require('../assets/images/red.jpg'),
-    },
-  },
-  {
-    id: '9',
-    day: 'TUE',
-    date: '09',
-    status: 'COMPLETED',
-    time: '12.15 PM',
-    team1: {
-      name: 'Chicago Cubs',
-      image: require('../assets/images/Splash.jpeg'),
-    },
-    team2: {
-      name: 'RED SCX',
-      image: require('../assets/images/Splash.jpeg'),
-    },
-  },
+  // {
+  //   id: '6',
+  //   day: 'SAT',
+  //   date: '06',
+  //   status: 'COMPLETED',
+  //   time: '02:51 AM',
+  //   team1: {
+  //     name: 'Milwaukee\nBrewers',
+  //     image: require('../assets/images/img.png'),
+  //   },
+  //   team2: {
+  //     name: 'SK',
+  //     image: require('../assets/images/Splash.jpeg'),
+  //   },
+  // },
+  // {
+  //   id: '7',
+  //   day: 'MON',
+  //   date: '08',
+  //   status: 'COMPLETED',
+  //   time: '9.15 AM',
+  //   team1: {
+  //     name: 'Chicago Cubs',
+  //     image: require('../assets/images/Splash.jpeg'),
+  //   },
+  //   team2: {
+  //     name: 'RED SCX',
+  //     image: require('../assets/images/red.jpg'),
+  //   },
+  // },
+  // {
+  //   id: '8',
+  //   day: 'TUE',
+  //   date: '09',
+  //   status: 'COMPLETED',
+  //   time: '9.15 AM',
+  //   team1: {
+  //     name: 'Chicago Cubs',
+  //     image: require('../assets/images/Splash.jpeg'),
+  //   },
+  //   team2: {
+  //     name: 'RED SCX',
+  //     image: require('../assets/images/red.jpg'),
+  //   },
+  // },
+  // {
+  //   id: '9',
+  //   day: 'TUE',
+  //   date: '09',
+  //   status: 'COMPLETED',
+  //   time: '12.15 PM',
+  //   team1: {
+  //     name: 'Chicago Cubs',
+  //     image: require('../assets/images/Splash.jpeg'),
+  //   },
+  //   team2: {
+  //     name: 'RED SCX',
+  //     image: require('../assets/images/Splash.jpeg'),
+  //   },
+  // },
 ];
 
 const EventsScreen = () => {
+  const dispatch = useDispatch();
+  const { data: eventsData, error, isLoading } = useGetEventsListQuery({
+    limit: 10, 
+    offset: 0, 
+  });
+  const storedEventsData = useSelector((state) => state.auth.eventsData);
+  useEffect(() => {
+    if (eventsData) {
+      dispatch(setEventsData(eventsData));
+    }
+  }, [eventsData, dispatch]);
+
+  useEffect(() => {
+    if (isLoading) {
+      console.log('Loading events data...');
+    } else if (error) {
+      console.error('Error fetching events data:', error);
+    } else {
+      console.log('Events data:', storedEventsData);
+    }
+  }, [isLoading, error, storedEventsData]);
   const renderEventItem = ({item}: any) => (
     <View style={{paddingHorizontal: 25}}>
       <View style={{flexDirection: 'row'}}>
@@ -235,9 +259,10 @@ const EventsScreen = () => {
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        data={eventsData}
+        data={storedEventsData}
         keyExtractor={item => item.id}
         renderItem={renderEventItem}
+        ListEmptyComponent={<Text style={styles.noevents}>No events available</Text>}
       />
       <View
         style={{
@@ -294,6 +319,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 60,
     width: 50,
+  },
+  noevents:{
+    textAlign:'center',
+    fontSize:20
   },
   date: {
     color: '#000',

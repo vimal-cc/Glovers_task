@@ -52,7 +52,6 @@ const data2 = [
         score: '0 - 0',
         urText: 'UR',
       },
-      // Add more items as needed
     ],
   },
   {
@@ -80,7 +79,6 @@ const data2 = [
         teamName: 'Falkland.Gil.',
         score: '0 - 0',
       },
-      // Add more items as needed
     ],
   },
 ];
@@ -204,7 +202,6 @@ const HomeSample = () => {
                     {innerItem.urText && (
                       <Text style={styles.ur_text}>{innerItem.urText}</Text>
                     )}
-                     
                   </View>
                 ))}
               </>
@@ -265,7 +262,6 @@ const HomeSample = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* ... */}
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

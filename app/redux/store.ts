@@ -1,19 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {configureStore, combineReducers, ThunkDispatch} from '@reduxjs/toolkit';
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import auth from '../redux/slices/AuthSlice';
-import {
-  persistReducer,
-  persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-
-import {AppState} from 'react-native';
-
+import {persistReducer, persistStore} from 'redux-persist';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import {HTTPClient} from '../utils/HttpsClient';
 
@@ -30,7 +18,6 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
-
 const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware => {
