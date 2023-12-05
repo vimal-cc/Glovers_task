@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState }from 'react';
 import {View, Text, StatusBar, Image, StyleSheet, FlatList} from 'react-native';
+import  {useGetLiveMatchListQuery} from '../redux/services/AuthService'
 
 const data = [
   {
@@ -22,7 +23,27 @@ const data = [
   },
 ];
 
+const SplashScreen = () => (
+  <View style={styles.splashContainer}>
+    <Image
+      source={require('../assets/images/spinning_gif.gif')}
+      style={{ width: 50, height: 50 }}
+    />
+  </View>
+);
+
 const LiveScreen = () => {
+  const { data: liveMatchList, error, refetch } = useGetLiveMatchListQuery({});
+  useEffect(() => {
+    refetch();
+  }, []);
+  const [showSplash, setShowSplash] = useState(true);
+  useEffect(() => {
+    const splashTimeout = setTimeout(() => {
+      setShowSplash(false);
+    }, 500); 
+    return () => clearTimeout(splashTimeout);
+  }, []);
   const renderItem = ({item}: any) => (
     <View>
       <View style={styles.box}>
@@ -110,11 +131,15 @@ const LiveScreen = () => {
           />
         </View>
       </View>
-      <FlatList
-        data={data}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-      />
+      {showSplash ? (
+        <SplashScreen />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+        />
+      )}
     </View>
   );
 };
@@ -153,6 +178,12 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#cccccc',
     borderRadius: 15,
+  },
+  splashContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   baseballcontainer: {
     borderTopLeftRadius: 13,

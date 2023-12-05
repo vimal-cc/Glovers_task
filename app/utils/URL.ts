@@ -6,3 +6,4 @@ export const FORGOT_PASSWORD = 'v1/auth/forgotPassword';
 export const EVENTS_LIST = 'v1/user/events/list';
 export const GET_NOTIFICATIONS = 'v1/user/notifications?';
 export const GAME_LIST = 'v1/user/events/dashboard';
+export const LIVE_MATCH_LIST = "v1/user/events/livematch-list";

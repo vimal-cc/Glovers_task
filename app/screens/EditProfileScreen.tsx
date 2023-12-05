@@ -10,11 +10,14 @@ import {
 import React, {useState} from 'react';
 import commonStyles from '../components/Styles';
 import Snackbar from 'react-native-snackbar';
+import {useSelector} from 'react-redux';
 
 const EditProfileScreen = ({navigation}: any) => {
+  const userDetails = useSelector(state => state.auth.userDetails);
+  console.log('EditProfile------->', userDetails);
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(userDetails?.email || '');
 
   const showSnackbar = (message: string) => {
     Snackbar.show({
@@ -23,8 +26,8 @@ const EditProfileScreen = ({navigation}: any) => {
   };
 
   const handleDetails = () => {
-    if (!firstname || !lastname || !email) {
-      showSnackbar('All fields are required.');
+    if (!firstname || !lastname) {
+      showSnackbar('First name and last name are required.');
     } else {
       navigation.goBack();
       setFirstName('');

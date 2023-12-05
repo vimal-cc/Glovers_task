@@ -7,6 +7,7 @@ import {
   GET_NOTIFICATIONS,
   EVENTS_LIST,
   GAME_LIST,
+  LIVE_MATCH_LIST
 } from '../../utils/URL';
 
 export const authService = HTTPClient.injectEndpoints({
@@ -57,6 +58,12 @@ export const authService = HTTPClient.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getLiveMatchList: build.query({
+      query: () => ({
+        url: LIVE_MATCH_LIST,
+        method: 'GET',
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -69,4 +76,5 @@ export const {
   useGetNotificationsQuery,
   useGetEventsListQuery,
   useGetGameListQuery,
+  useGetLiveMatchListQuery
 } = authService;

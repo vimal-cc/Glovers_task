@@ -1,5 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {authService} from '../services/AuthService';
+import {CommonActions} from '@react-navigation/native';
+import Snackbar from 'react-native-snackbar';
 
 const initialState = {
   tokenDetails: null,
@@ -7,6 +9,13 @@ const initialState = {
   notificationsData: null,
   eventsData: null,
   gameList: null,
+  liveMatchList: null,
+};
+
+const showSnackbar = (message: string) => {
+  Snackbar.show({
+    text: message,
+  });
 };
 
 export const authSlice = createSlice({
@@ -24,6 +33,9 @@ export const authSlice = createSlice({
       state.eventsData = action.payload;
     },
     setGameList: (state, action) => {
+      state.gameList = action.payload;
+    },
+    setliveMatchList: (state, action) => {
       state.gameList = action.payload;
     },
   },
@@ -55,6 +67,10 @@ export const authSlice = createSlice({
           // console.log('no', payload);
           if (payload.code === 0) {
             console.log('Password changed', payload);
+            showSnackbar('Password changed successfully');
+          } else if (payload.code === 2) {
+            console.log('Wrong password entered', payload);
+            showSnackbar('Wrong old password entered');
           }
         },
       )
@@ -64,6 +80,9 @@ export const authSlice = createSlice({
           //  console.log('no',payload);
           if (payload.code === 0) {
             console.log('successful', payload);
+          } else if (payload.code === 2) {
+            console.log('Wrong ', payload);
+            showSnackbar('email entered is wrong');
           }
         },
       )
@@ -72,7 +91,7 @@ export const authSlice = createSlice({
         (state, {payload}) => {
           if (payload.code === 0) {
             state.notificationsData = payload.data;
-          } else {
+          } else if (payload.code === 2) {
             console.error('Failed to fetch notifications:', payload.message);
           }
         },
@@ -82,7 +101,7 @@ export const authSlice = createSlice({
         (state, {payload}) => {
           if (payload.code === 0) {
             state.eventsData = payload.data;
-          } else {
+          } else if (payload.code === 2) {
             console.error('Failed to fetch events:', payload.message);
           }
         },
@@ -93,16 +112,32 @@ export const authSlice = createSlice({
           if (payload.code === 0) {
             state.gameList = payload.data;
             console.log('Game list fetched successfully', payload);
-            // Update your state accordingly
-          } else {
+          } else if (payload.code === 2) {
             console.error('Failed to fetch game list:', payload.message);
+          }
+        },
+      )
+      .addMatcher(
+        authService.endpoints.getLiveMatchList.matchFulfilled,
+        (state, {payload}) => {
+          if (payload.code === 0) {
+            console.log('Live match list fetched successfully', payload);
+            state.liveMatchList = payload.data;
+          } else if (payload.code === 2) {
+            console.error('Failed to fetch live match list:', payload.message);
+            showSnackbar(' ');
           }
         },
       );
   },
 });
 
-export const {isLogout, setNotificationsData, setEventsData, setGameList} =
-  authSlice.actions;
+export const {
+  isLogout,
+  setNotificationsData,
+  setEventsData,
+  setGameList,
+  setliveMatchList,
+} = authSlice.actions;
 
 export default authSlice.reducer;

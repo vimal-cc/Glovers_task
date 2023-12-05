@@ -43,13 +43,25 @@ const ChangePasswordScreen = ({navigation}: any) => {
         new_password: newpassword.trim(),
         confirm_password: confirmpassword.trim(),
       };
-      await changePassword(changePasswordReq);
-      showSnackbar('password updated successfully');
-
-      navigation.goBack();
-      setOldPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
+      // await changePassword(changePasswordReq);
+      // showSnackbar('password updated successfully');
+      // navigation.goBack();
+      // setOldPassword('');
+      // setNewPassword('');
+      // setConfirmPassword('');
+      try {
+        const response = await changePassword(changePasswordReq);
+        if ('data' in response) {
+          console.log('Password changed successfully', response.data);
+          navigation.goBack();
+        } else if ('error' in response) {
+          console.log('Error:', response.error);
+          showSnackbar('Entered old password is wrong');
+        }
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        showSnackbar('An unexpected error occurred');
+      }
     }
   };
 

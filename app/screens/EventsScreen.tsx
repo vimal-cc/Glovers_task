@@ -1,8 +1,16 @@
-import React, { useEffect,useState } from 'react';
-import { View, Text, StatusBar, Image, StyleSheet, FlatList } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { useGetEventsListQuery } from '../redux/services/AuthService';
-import { setEventsData } from '../redux/slices/AuthSlice';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StatusBar,
+  Image,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useGetEventsListQuery} from '../redux/services/AuthService';
+import {setEventsData} from '../redux/slices/AuthSlice';
 
 const Data = [
   {
@@ -142,18 +150,40 @@ const Data = [
   // },
 ];
 
+const SplashScreen = () => (
+  <View style={styles.splashContainer}>
+    <Image
+      source={require('../assets/images/spinning_gif.gif')}
+      style={{ width: 50, height: 50 }}
+    />
+  </View>
+);
+
 const EventsScreen = () => {
   const dispatch = useDispatch();
-  const { data: eventsData, error, isLoading } = useGetEventsListQuery({
-    limit: 10, 
-    offset: 0, 
+  const {
+    data: eventsData,
+    error,
+    isLoading,
+  } = useGetEventsListQuery({
+    limit: 10,
+    offset: 0,
   });
-  const storedEventsData = useSelector((state) => state.auth.eventsData);
+  const storedEventsData = useSelector(state => state.auth.eventsData);
+  const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
     if (eventsData) {
       dispatch(setEventsData(eventsData));
     }
   }, [eventsData, dispatch]);
+
+  useEffect(() => {
+    const splashTimeout = setTimeout(() => {
+      setShowSplash(false);
+    }, 500); 
+    return () => clearTimeout(splashTimeout);
+  }, []);
+
 
   useEffect(() => {
     if (isLoading) {
@@ -227,58 +257,65 @@ const EventsScreen = () => {
         backgroundColor="transparent"
         barStyle="dark-content"
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: 25,
-        }}>
-        <View>
-          <Text style={styles.Events}>Events</Text>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Image
-            source={require('../assets/images/search_big.png')}
-            style={[styles.logo, {marginHorizontal: 20}]}
-          />
-          <Image
-            source={require('../assets/images/notification_bell.png')}
-            style={styles.logo}
-          />
-        </View>
-      </View>
-      <View
-        style={{
-          backgroundColor: '#f5f5f5',
-          paddingVertical: 12,
-          marginTop: 10,
-          marginBottom: 25,
-        }}>
-        <Text style={styles.oct_text}>October 2023</Text>
-      </View>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        data={storedEventsData}
-        keyExtractor={item => item.id}
-        renderItem={renderEventItem}
-        ListEmptyComponent={<Text style={styles.noevents}>No events available</Text>}
-      />
-      <View
-        style={{
-          alignItems: 'flex-end',
-          marginRight: 20,
-        }}>
-        <Image
-          source={require('../assets/images/round_add.png')}
-          style={{
-            width: 55,
-            height: 55,
-            position: 'absolute',
-            bottom: 20,
-          }}
-        />
-      </View>
+      
+        
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: 25,
+            }}>
+            <View>
+              <Text style={styles.Events}>Events</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image
+                source={require('../assets/images/search_big.png')}
+                style={[styles.logo, {marginHorizontal: 20}]}
+              />
+              <Image
+                source={require('../assets/images/notification_bell.png')}
+                style={styles.logo}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              backgroundColor: '#f5f5f5',
+              paddingVertical: 12,
+              marginTop: 10,
+              marginBottom: 25,
+            }}>
+            <Text style={styles.oct_text}>October 2023</Text>
+          </View>
+          {showSplash ? (
+        <SplashScreen />
+      ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            data={storedEventsData}
+            keyExtractor={item => item.id}
+            renderItem={renderEventItem}
+            ListEmptyComponent={
+              <Text style={styles.noevents}>No events available</Text>
+            }
+          />)}
+          <View
+            style={{
+              alignItems: 'flex-end',
+              marginRight: 20,
+            }}>
+            <Image
+              source={require('../assets/images/round_add.png')}
+              style={{
+                width: 55,
+                height: 55,
+                position: 'absolute',
+                bottom: 20,
+              }}
+            />
+          </View>
     </View>
   );
 };
@@ -300,6 +337,12 @@ const styles = StyleSheet.create({
     height: 30,
     resizeMode: 'contain',
   },
+  splashContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
   head: {
     fontSize: 20,
     fontWeight: '600',
@@ -320,9 +363,9 @@ const styles = StyleSheet.create({
     height: 60,
     width: 50,
   },
-  noevents:{
-    textAlign:'center',
-    fontSize:20
+  noevents: {
+    textAlign: 'center',
+    fontSize: 20,
   },
   date: {
     color: '#000',

@@ -8,36 +8,40 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import commonStyles from '../components/Styles';
 import {setNotificationsData} from '../redux/slices/AuthSlice';
 import {useGetNotificationsQuery} from '../redux/services/AuthService';
 
-const data = [
-  {id: '1', content: 'Milwakee Brewers vs SK event is going to start'},
-  {id: '2', content: 'Milwakee Brewers vs SK event is going to start'},
-  {id: '3', content: 'Milwakee Brewers vs SK event is going to start'},
-  {id: '4', content: 'Milwakee Brewers vs SK event is going to start'},
-  {id: '5', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '6', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '7', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '8', content: 'Milwakee Brewers vs SK event is going to start'},
-  // {id: '9', content: 'Milwakee Brewers vs SK event is going to start'},
-];
+// const data = [
+//   {id: '1', content: 'Milwakee Brewers vs SK event is going to start'},
+//   {id: '2', content: 'Milwakee Brewers vs SK event is going to start'},
+//   {id: '3', content: 'Milwakee Brewers vs SK event is going to start'},
+//   {id: '4', content: 'Milwakee Brewers vs SK event is going to start'},
+//   {id: '5', content: 'Milwakee Brewers vs SK event is going to start'},
+//   // {id: '6', content: 'Milwakee Brewers vs SK event is going to start'},
+//   // {id: '7', content: 'Milwakee Brewers vs SK event is going to start'},
+//   // {id: '8', content: 'Milwakee Brewers vs SK event is going to start'},
+//   // {id: '9', content: 'Milwakee Brewers vs SK event is going to start'},
+// ];
 
 const NotificationScreen = ({navigation}: any) => {
   console.log('notify');
   const dispatch = useDispatch();
-  const {data: notificationsData, error} = useGetNotificationsQuery({
+  const notificationsData = useSelector(
+    (state: RootState) => state.auth.notificationsData
+  );
+
+  const {data: apiNotifications, error} = useGetNotificationsQuery({
     limit: 10,
     offset: 0,
   });
 
   useEffect(() => {
-    if (notificationsData) {
-      dispatch(setNotificationsData(notificationsData));
+    if (apiNotifications) {
+      dispatch(setNotificationsData(apiNotifications));
     }
-  }, [notificationsData, dispatch]);
+  }, [apiNotifications, dispatch]);
 
   const renderItem = ({item}: any) => (
     <View style={styles.paracontainer}>
@@ -72,7 +76,7 @@ const NotificationScreen = ({navigation}: any) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        data={data}
+        data={notificationsData || [] }
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={{paddingBottom: 20}}
