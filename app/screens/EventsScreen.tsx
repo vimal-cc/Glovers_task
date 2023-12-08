@@ -154,7 +154,7 @@ const SplashScreen = () => (
   <View style={styles.splashContainer}>
     <Image
       source={require('../assets/images/spinning_gif.gif')}
-      style={{ width: 50, height: 50 }}
+      style={{width: 50, height: 50}}
     />
   </View>
 );
@@ -170,6 +170,7 @@ const EventsScreen = () => {
     offset: 0,
   });
   const storedEventsData = useSelector(state => state.auth.eventsData);
+  console.log('Events data------->', storedEventsData);
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
     if (eventsData) {
@@ -180,10 +181,9 @@ const EventsScreen = () => {
   useEffect(() => {
     const splashTimeout = setTimeout(() => {
       setShowSplash(false);
-    }, 500); 
+    }, 500);
     return () => clearTimeout(splashTimeout);
   }, []);
-
 
   useEffect(() => {
     if (isLoading) {
@@ -257,65 +257,65 @@ const EventsScreen = () => {
         backgroundColor="transparent"
         barStyle="dark-content"
       />
-      
-        
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 25,
-            }}>
-            <View>
-              <Text style={styles.Events}>Events</Text>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/images/search_big.png')}
-                style={[styles.logo, {marginHorizontal: 20}]}
-              />
-              <Image
-                source={require('../assets/images/notification_bell.png')}
-                style={styles.logo}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              backgroundColor: '#f5f5f5',
-              paddingVertical: 12,
-              marginTop: 10,
-              marginBottom: 25,
-            }}>
-            <Text style={styles.oct_text}>October 2023</Text>
-          </View>
-          {showSplash ? (
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingHorizontal: 25,
+        }}>
+        <View>
+          <Text style={styles.Events}>Events</Text>
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Image
+            source={require('../assets/images/search_big.png')}
+            style={[styles.logo, {marginHorizontal: 20}]}
+          />
+          <Image
+            source={require('../assets/images/notification_bell.png')}
+            style={styles.logo}
+          />
+        </View>
+      </View>
+      <View
+        style={{
+          backgroundColor: '#f5f5f5',
+          paddingVertical: 12,
+          marginTop: 10,
+          marginBottom: 25,
+        }}>
+        <Text style={styles.oct_text}>October 2023</Text>
+      </View>
+      {showSplash ? (
         <SplashScreen />
       ) : (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={storedEventsData}
-            keyExtractor={item => item.id}
-            renderItem={renderEventItem}
-            ListEmptyComponent={
-              <Text style={styles.noevents}>No events available</Text>
-            }
-          />)}
-          <View
-            style={{
-              alignItems: 'flex-end',
-              marginRight: 20,
-            }}>
-            <Image
-              source={require('../assets/images/round_add.png')}
-              style={{
-                width: 55,
-                height: 55,
-                position: 'absolute',
-                bottom: 20,
-              }}
-            />
-          </View>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          data={storedEventsData}
+          keyExtractor={item => item.id}
+          renderItem={renderEventItem}
+          ListEmptyComponent={
+            <Text style={styles.noevents}>No events available</Text>
+          }
+        />
+      )}
+      <View
+        style={{
+          alignItems: 'flex-end',
+          marginRight: 20,
+        }}>
+        <Image
+          source={require('../assets/images/round_add.png')}
+          style={{
+            width: 55,
+            height: 55,
+            position: 'absolute',
+            bottom: 20,
+          }}
+        />
+      </View>
     </View>
   );
 };

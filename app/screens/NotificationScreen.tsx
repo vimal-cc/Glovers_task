@@ -29,7 +29,7 @@ const NotificationScreen = ({navigation}: any) => {
   console.log('notify');
   const dispatch = useDispatch();
   const notificationsData = useSelector(
-    (state: RootState) => state.auth.notificationsData
+    (state: RootState) => state.auth.notificationsData,
   );
 
   const {data: apiNotifications, error} = useGetNotificationsQuery({
@@ -38,6 +38,7 @@ const NotificationScreen = ({navigation}: any) => {
   });
 
   useEffect(() => {
+    console.log('apiNotifications:', apiNotifications);
     if (apiNotifications) {
       dispatch(setNotificationsData(apiNotifications));
     }
@@ -76,7 +77,7 @@ const NotificationScreen = ({navigation}: any) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        data={notificationsData || [] }
+        data={notificationsData || []}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={{paddingBottom: 20}}
